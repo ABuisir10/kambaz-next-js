@@ -298,7 +298,7 @@ export default function Lab1() {
           to get dummy text
           <br />
           Please{" "}
-          <a href="https://www.lipsum.com" id="wd-lipsum">
+          <a href="https://github.com/ABuisir10" id="wd-lipsum">
             click here
           </a>{" "}
           for github

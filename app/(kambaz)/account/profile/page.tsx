@@ -1,21 +1,32 @@
 import Link from "next/link";
-export default function Profile() {
+import { FormControl } from "react-bootstrap";
+export default function Signin() {
   return (
-    <div id="wd-profile-screen">
-      <h3>Profile</h3>
-      <input defaultValue="alice" placeholder="username" className="wd-username" /><br/>
-      <input defaultValue="123" placeholder="password" type="password" className="wd-password" /><br/>
-      <input defaultValue="Alice" placeholder="First Name" id="wd-firstname" /><br/>
-      <input defaultValue="Wonderland" placeholder="Last Name" id="wd-lastname" /><br/>
-      <input defaultValue="2000-01-01" type="date" id="wd-dob" /><br/>
-      <input defaultValue="alice@wonderland" type="email" id="wd-email" /><br/>
-      <select defaultValue="FACULTY" id="wd-role">
-        <option value="USER">User</option>
-        <option value="ADMIN">Admin</option>
-        <option value="FACULTY">Faculty</option>
-        <option value="STUDENT">Student</option>
-      </select><br/>
-      <Link href="signin">Sign out</Link>
-    </div>
-  );
-}
+    <div id="wd-signin-screen">
+      <h1>Profile</h1>
+      <FormControl id="wd-username"
+             placeholder="alice"
+             className="mb-2"/><br />
+      <FormControl id="wd-password"
+             placeholder="123" type="password"
+             className="mb-2"/><br />
+      <FormControl id="wd-firstname"
+             placeholder="Alice" type="firstname"
+             className="mb-2"/><br />
+      <FormControl id="wd-lastname"
+             placeholder="Wonderland" type="lastname"
+             className="mb-2"/><br />
+      <FormControl id="wd-date"
+             placeholder="mm/dd/yyyy" type="date"
+             className="mb-2"/><br />
+      <FormControl id="wd-email"
+             placeholder="alice@wonderland.com" type="email"
+             className="mb-2"/><br />
+      <FormControl id="wd-User"
+             placeholder="User" type="User"
+             className="mb-2"/><br />                                   
+      <Link id="wd-signup-btn"
+            href="/account/signin"
+            className="btn btn-danger w-100 mb-2">
+            Sign out </Link><br />
+    </div> );}
