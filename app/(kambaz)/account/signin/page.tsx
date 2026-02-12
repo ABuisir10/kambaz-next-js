@@ -15,9 +15,4 @@ export default function Signin() {
             className="btn btn-primary w-100 mb-2">
             Sign in </Link><br />
       <Link id="wd-signup-link" href="/account/signup">Sign up</Link>
-      <br />
-      <br />
-      <br />
-      <br />
-      <h1>Awad Buisir's Assignment</h1>
     </div> );}
