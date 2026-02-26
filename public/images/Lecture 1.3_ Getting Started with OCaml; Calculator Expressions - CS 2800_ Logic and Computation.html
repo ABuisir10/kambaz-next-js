@@ -1,0 +1,1689 @@
+<!DOCTYPE html>
+<!-- saved from url=(0051)https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/ -->
+<html lang="en" class="js-focus-visible js" data-js-focus-visible=""><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+      
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.2/">
+      
+      
+        <link rel="next" href="https://course.ccs.neu.edu/cs2800sp26/lectures/2.1/">
+      
+      
+      <link rel="icon" href="https://course.ccs.neu.edu/cs2800sp26/pictures/verified.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.15">
+    
+    
+      
+        <title>Lecture 1.3: Getting Started with OCaml; Calculator Expressions - CS 2800: Logic and Computation</title>
+      
+    
+    
+      <link rel="stylesheet" href="./Lecture 1.3_ Getting Started with OCaml; Calculator Expressions - CS 2800_ Logic and Computation_files/main.342714a4.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+        <link rel="stylesheet" href="./Lecture 1.3_ Getting Started with OCaml; Calculator Expressions - CS 2800_ Logic and Computation_files/css">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  <style type="text/css">.CtxtMenu_InfoClose {  top:.2em; right:.2em;}
+.CtxtMenu_InfoContent {  overflow:auto; text-align:left; font-size:80%;  padding:.4em .6em; border:1px inset; margin:1em 0px;  max-height:20em; max-width:30em; background-color:#EEEEEE;  white-space:normal;}
+.CtxtMenu_Info.CtxtMenu_MousePost {outline:none;}
+.CtxtMenu_Info {  position:fixed; left:50%; width:auto; text-align:center;  border:3px outset; padding:1em 2em; background-color:#DDDDDD;  color:black;  cursor:default; font-family:message-box; font-size:120%;  font-style:normal; text-indent:0; text-transform:none;  line-height:normal; letter-spacing:normal; word-spacing:normal;  word-wrap:normal; white-space:nowrap; float:none; z-index:201;  border-radius: 15px;                     /* Opera 10.5 and IE9 */  -webkit-border-radius:15px;               /* Safari and Chrome */  -moz-border-radius:15px;                  /* Firefox */  -khtml-border-radius:15px;                /* Konqueror */  box-shadow:0px 10px 20px #808080;         /* Opera 10.5 and IE9 */  -webkit-box-shadow:0px 10px 20px #808080; /* Safari 3 & Chrome */  -moz-box-shadow:0px 10px 20px #808080;    /* Forefox 3.5 */  -khtml-box-shadow:0px 10px 20px #808080;  /* Konqueror */  filter:progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color="gray", Positive="true"); /* IE */}
+</style><style type="text/css">.CtxtMenu_MenuClose {  position:absolute;  cursor:pointer;  display:inline-block;  border:2px solid #AAA;  border-radius:18px;  -webkit-border-radius: 18px;             /* Safari and Chrome */  -moz-border-radius: 18px;                /* Firefox */  -khtml-border-radius: 18px;              /* Konqueror */  font-family: "Courier New", Courier;  font-size:24px;  color:#F0F0F0}
+.CtxtMenu_MenuClose span {  display:block; background-color:#AAA; border:1.5px solid;  border-radius:18px;  -webkit-border-radius: 18px;             /* Safari and Chrome */  -moz-border-radius: 18px;                /* Firefox */  -khtml-border-radius: 18px;              /* Konqueror */  line-height:0;  padding:8px 0 6px     /* may need to be browser-specific */}
+.CtxtMenu_MenuClose:hover {  color:white!important;  border:2px solid #CCC!important}
+.CtxtMenu_MenuClose:hover span {  background-color:#CCC!important}
+.CtxtMenu_MenuClose:hover:focus {  outline:none}
+</style><style type="text/css">.CtxtMenu_Menu {  position:absolute;  background-color:white;  color:black;  width:auto; padding:5px 0px;  border:1px solid #CCCCCC; margin:0; cursor:default;  font: menu; text-align:left; text-indent:0; text-transform:none;  line-height:normal; letter-spacing:normal; word-spacing:normal;  word-wrap:normal; white-space:nowrap; float:none; z-index:201;  border-radius: 5px;                     /* Opera 10.5 and IE9 */  -webkit-border-radius: 5px;             /* Safari and Chrome */  -moz-border-radius: 5px;                /* Firefox */  -khtml-border-radius: 5px;              /* Konqueror */  box-shadow:0px 10px 20px #808080;         /* Opera 10.5 and IE9 */  -webkit-box-shadow:0px 10px 20px #808080; /* Safari 3 & Chrome */  -moz-box-shadow:0px 10px 20px #808080;    /* Forefox 3.5 */  -khtml-box-shadow:0px 10px 20px #808080;  /* Konqueror */}
+.CtxtMenu_MenuItem {  padding: 1px 2em;  background:transparent;}
+.CtxtMenu_MenuArrow {  position:absolute; right:.5em; padding-top:.25em; color:#666666;  font-family: null; font-size: .75em}
+.CtxtMenu_MenuActive .CtxtMenu_MenuArrow {color:white}
+.CtxtMenu_MenuArrow.CtxtMenu_RTL {left:.5em; right:auto}
+.CtxtMenu_MenuCheck {  position:absolute; left:.7em;  font-family: null}
+.CtxtMenu_MenuCheck.CtxtMenu_RTL { right:.7em; left:auto }
+.CtxtMenu_MenuRadioCheck {  position:absolute; left: .7em;}
+.CtxtMenu_MenuRadioCheck.CtxtMenu_RTL {  right: .7em; left:auto}
+.CtxtMenu_MenuInputBox {  padding-left: 1em; right:.5em; color:#666666;  font-family: null;}
+.CtxtMenu_MenuInputBox.CtxtMenu_RTL {  left: .1em;}
+.CtxtMenu_MenuComboBox {  left:.1em; padding-bottom:.5em;}
+.CtxtMenu_MenuSlider {  left: .1em;}
+.CtxtMenu_SliderValue {  position:absolute; right:.1em; padding-top:.25em; color:#333333;  font-size: .75em}
+.CtxtMenu_SliderBar {  outline: none; background: #d3d3d3}
+.CtxtMenu_MenuLabel {  padding: 1px 2em 3px 1.33em;  font-style:italic}
+.CtxtMenu_MenuRule {  border-top: 1px solid #DDDDDD;  margin: 4px 3px;}
+.CtxtMenu_MenuDisabled {  color:GrayText}
+.CtxtMenu_MenuActive {  background-color: #606872;  color: white;}
+.CtxtMenu_MenuDisabled:focus {  background-color: #E8E8E8}
+.CtxtMenu_MenuLabel:focus {  background-color: #E8E8E8}
+.CtxtMenu_ContextMenu:focus {  outline:none}
+.CtxtMenu_ContextMenu .CtxtMenu_MenuItem:focus {  outline:none}
+.CtxtMenu_SelectionMenu {  position:relative; float:left;  border-bottom: none; -webkit-box-shadow:none; -webkit-border-radius:0px; }
+.CtxtMenu_SelectionItem {  padding-right: 1em;}
+.CtxtMenu_Selection {  right: 40%; width:50%; }
+.CtxtMenu_SelectionBox {  padding: 0em; max-height:20em; max-width: none;  background-color:#FFFFFF;}
+.CtxtMenu_SelectionDivider {  clear: both; border-top: 2px solid #000000;}
+.CtxtMenu_Menu .CtxtMenu_MenuClose {  top:-10px; left:-10px}
+</style><style id="MJX-CHTML-styles">
+mjx-container[jax="CHTML"] {
+  line-height: 0;
+}
+
+mjx-container [space="1"] {
+  margin-left: .111em;
+}
+
+mjx-container [space="2"] {
+  margin-left: .167em;
+}
+
+mjx-container [space="3"] {
+  margin-left: .222em;
+}
+
+mjx-container [space="4"] {
+  margin-left: .278em;
+}
+
+mjx-container [space="5"] {
+  margin-left: .333em;
+}
+
+mjx-container [rspace="1"] {
+  margin-right: .111em;
+}
+
+mjx-container [rspace="2"] {
+  margin-right: .167em;
+}
+
+mjx-container [rspace="3"] {
+  margin-right: .222em;
+}
+
+mjx-container [rspace="4"] {
+  margin-right: .278em;
+}
+
+mjx-container [rspace="5"] {
+  margin-right: .333em;
+}
+
+mjx-container [size="s"] {
+  font-size: 70.7%;
+}
+
+mjx-container [size="ss"] {
+  font-size: 50%;
+}
+
+mjx-container [size="Tn"] {
+  font-size: 60%;
+}
+
+mjx-container [size="sm"] {
+  font-size: 85%;
+}
+
+mjx-container [size="lg"] {
+  font-size: 120%;
+}
+
+mjx-container [size="Lg"] {
+  font-size: 144%;
+}
+
+mjx-container [size="LG"] {
+  font-size: 173%;
+}
+
+mjx-container [size="hg"] {
+  font-size: 207%;
+}
+
+mjx-container [size="HG"] {
+  font-size: 249%;
+}
+
+mjx-container [width="full"] {
+  width: 100%;
+}
+
+mjx-box {
+  display: inline-block;
+}
+
+mjx-block {
+  display: block;
+}
+
+mjx-itable {
+  display: inline-table;
+}
+
+mjx-row {
+  display: table-row;
+}
+
+mjx-row > * {
+  display: table-cell;
+}
+
+mjx-mtext {
+  display: inline-block;
+}
+
+mjx-mstyle {
+  display: inline-block;
+}
+
+mjx-merror {
+  display: inline-block;
+  color: red;
+  background-color: yellow;
+}
+
+mjx-mphantom {
+  visibility: hidden;
+}
+
+_::-webkit-full-page-media, _:future, :root mjx-container {
+  will-change: opacity;
+}
+
+mjx-assistive-mml {
+  position: absolute !important;
+  top: 0px;
+  left: 0px;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 1px 0px 0px 0px !important;
+  border: 0px !important;
+  display: block !important;
+  width: auto !important;
+  overflow: hidden !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+mjx-assistive-mml[display="block"] {
+  width: 100% !important;
+}
+
+mjx-c::before {
+  display: block;
+  width: 0;
+}
+
+.MJX-TEX {
+  font-family: MJXZERO, MJXTEX;
+}
+
+.TEX-B {
+  font-family: MJXZERO, MJXTEX-B;
+}
+
+.TEX-I {
+  font-family: MJXZERO, MJXTEX-I;
+}
+
+.TEX-MI {
+  font-family: MJXZERO, MJXTEX-MI;
+}
+
+.TEX-BI {
+  font-family: MJXZERO, MJXTEX-BI;
+}
+
+.TEX-S1 {
+  font-family: MJXZERO, MJXTEX-S1;
+}
+
+.TEX-S2 {
+  font-family: MJXZERO, MJXTEX-S2;
+}
+
+.TEX-S3 {
+  font-family: MJXZERO, MJXTEX-S3;
+}
+
+.TEX-S4 {
+  font-family: MJXZERO, MJXTEX-S4;
+}
+
+.TEX-A {
+  font-family: MJXZERO, MJXTEX-A;
+}
+
+.TEX-C {
+  font-family: MJXZERO, MJXTEX-C;
+}
+
+.TEX-CB {
+  font-family: MJXZERO, MJXTEX-CB;
+}
+
+.TEX-FR {
+  font-family: MJXZERO, MJXTEX-FR;
+}
+
+.TEX-FRB {
+  font-family: MJXZERO, MJXTEX-FRB;
+}
+
+.TEX-SS {
+  font-family: MJXZERO, MJXTEX-SS;
+}
+
+.TEX-SSB {
+  font-family: MJXZERO, MJXTEX-SSB;
+}
+
+.TEX-SSI {
+  font-family: MJXZERO, MJXTEX-SSI;
+}
+
+.TEX-SC {
+  font-family: MJXZERO, MJXTEX-SC;
+}
+
+.TEX-T {
+  font-family: MJXZERO, MJXTEX-T;
+}
+
+.TEX-V {
+  font-family: MJXZERO, MJXTEX-V;
+}
+
+.TEX-VB {
+  font-family: MJXZERO, MJXTEX-VB;
+}
+
+mjx-stretchy-v mjx-c, mjx-stretchy-h mjx-c {
+  font-family: MJXZERO, MJXTEX-S1, MJXTEX-S4, MJXTEX, MJXTEX-A ! important;
+}
+
+@font-face /* 0 */ {
+  font-family: MJXZERO;
+  src: url("https://unpkg.com/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Zero.woff") format("woff");
+}
+
+@font-face /* 1 */ {
+  font-family: MJXTEX;
+  src: url("https://unpkg.com/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Main-Regular.woff") format("woff");
+}
+
+@font-face /* 2 */ {
+  font-family: MJXTEX-B;
+  src: url("https://unpkg.com/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Main-Bold.woff") format("woff");
+}
+
+@font-face /* 3 */ {
+  font-family: MJXTEX-I;
+  src: url("https://unpkg.com/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Math-Italic.woff") format("woff");
+}
+
+@font-face /* 4 */ {
+  font-family: MJXTEX-MI;
+  src: url("https://unpkg.com/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Main-Italic.woff") format("woff");
+}
+
+@font-face /* 5 */ {
+  font-family: MJXTEX-BI;
+  src: url("https://unpkg.com/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Math-BoldItalic.woff") format("woff");
+}
+
+@font-face /* 6 */ {
+  font-family: MJXTEX-S1;
+  src: url("https://unpkg.com/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Size1-Regular.woff") format("woff");
+}
+
+@font-face /* 7 */ {
+  font-family: MJXTEX-S2;
+  src: url("https://unpkg.com/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Size2-Regular.woff") format("woff");
+}
+
+@font-face /* 8 */ {
+  font-family: MJXTEX-S3;
+  src: url("https://unpkg.com/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Size3-Regular.woff") format("woff");
+}
+
+@font-face /* 9 */ {
+  font-family: MJXTEX-S4;
+  src: url("https://unpkg.com/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Size4-Regular.woff") format("woff");
+}
+
+@font-face /* 10 */ {
+  font-family: MJXTEX-A;
+  src: url("https://unpkg.com/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_AMS-Regular.woff") format("woff");
+}
+
+@font-face /* 11 */ {
+  font-family: MJXTEX-C;
+  src: url("https://unpkg.com/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Calligraphic-Regular.woff") format("woff");
+}
+
+@font-face /* 12 */ {
+  font-family: MJXTEX-CB;
+  src: url("https://unpkg.com/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Calligraphic-Bold.woff") format("woff");
+}
+
+@font-face /* 13 */ {
+  font-family: MJXTEX-FR;
+  src: url("https://unpkg.com/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Fraktur-Regular.woff") format("woff");
+}
+
+@font-face /* 14 */ {
+  font-family: MJXTEX-FRB;
+  src: url("https://unpkg.com/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Fraktur-Bold.woff") format("woff");
+}
+
+@font-face /* 15 */ {
+  font-family: MJXTEX-SS;
+  src: url("https://unpkg.com/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_SansSerif-Regular.woff") format("woff");
+}
+
+@font-face /* 16 */ {
+  font-family: MJXTEX-SSB;
+  src: url("https://unpkg.com/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_SansSerif-Bold.woff") format("woff");
+}
+
+@font-face /* 17 */ {
+  font-family: MJXTEX-SSI;
+  src: url("https://unpkg.com/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_SansSerif-Italic.woff") format("woff");
+}
+
+@font-face /* 18 */ {
+  font-family: MJXTEX-SC;
+  src: url("https://unpkg.com/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Script-Regular.woff") format("woff");
+}
+
+@font-face /* 19 */ {
+  font-family: MJXTEX-T;
+  src: url("https://unpkg.com/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Typewriter-Regular.woff") format("woff");
+}
+
+@font-face /* 20 */ {
+  font-family: MJXTEX-V;
+  src: url("https://unpkg.com/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Vector-Regular.woff") format("woff");
+}
+
+@font-face /* 21 */ {
+  font-family: MJXTEX-VB;
+  src: url("https://unpkg.com/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Vector-Bold.woff") format("woff");
+}
+</style></head>
+  
+  
+    <body dir="ltr" data-new-gr-c-s-check-loaded="14.1272.0" data-gr-ext-installed="">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#lecture-13-getting-started-with-ocaml-calculator-expressions" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="https://course.ccs.neu.edu/cs2800sp26/" title="CS 2800: Logic and Computation" class="md-header__button md-logo" aria-label="CS 2800: Logic and Computation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="m9.585.52.929.68c.153.112.331.186.518.215l1.138.175a2.68 2.68 0 0 1 2.24 2.24l.174 1.139c.029.187.103.365.215.518l.68.928a2.68 2.68 0 0 1 0 3.17l-.68.928a1.2 1.2 0 0 0-.215.518l-.175 1.138a2.68 2.68 0 0 1-2.241 2.241l-1.138.175a1.2 1.2 0 0 0-.518.215l-.928.68a2.68 2.68 0 0 1-3.17 0l-.928-.68a1.2 1.2 0 0 0-.518-.215L3.83 14.41a2.68 2.68 0 0 1-2.24-2.24l-.175-1.138a1.2 1.2 0 0 0-.215-.518l-.68-.928a2.68 2.68 0 0 1 0-3.17l.68-.928c.112-.153.186-.331.215-.518l.175-1.14a2.68 2.68 0 0 1 2.24-2.24l1.139-.175c.187-.029.365-.103.518-.215l.928-.68a2.68 2.68 0 0 1 3.17 0M7.303 1.728l-.927.68a2.7 2.7 0 0 1-1.18.489l-1.137.174a1.18 1.18 0 0 0-.987.987l-.174 1.136a2.7 2.7 0 0 1-.489 1.18l-.68.928a1.18 1.18 0 0 0 0 1.394l.68.927c.256.348.424.753.489 1.18l.174 1.137c.078.509.478.909.987.987l1.136.174a2.7 2.7 0 0 1 1.18.489l.928.68c.414.305.979.305 1.394 0l.927-.68a2.7 2.7 0 0 1 1.18-.489l1.137-.174a1.18 1.18 0 0 0 .987-.987l.174-1.136a2.7 2.7 0 0 1 .489-1.18l.68-.928a1.18 1.18 0 0 0 0-1.394l-.68-.927a2.7 2.7 0 0 1-.489-1.18l-.174-1.137a1.18 1.18 0 0 0-.987-.987l-1.136-.174a2.7 2.7 0 0 1-1.18-.489l-.928-.68a1.18 1.18 0 0 0-1.394 0M11.28 6.78l-3.75 3.75a.75.75 0 0 1-1.06 0L4.72 8.78a.75.75 0 0 1 .018-1.042.75.75 0 0 1 1.042-.018L7 8.94l3.22-3.22a.75.75 0 0 1 1.042.018.75.75 0 0 1 .018 1.042"></path></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            CS 2800: Logic and Computation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Lecture 1.3: Getting Started with OCaml; Calculator Expressions
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required="">
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0">
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">Type to start searching</div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" style="top: 48px;">
+                <div class="md-sidebar__scrollwrap" style="height: 731px;">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://course.ccs.neu.edu/cs2800sp26/" title="CS 2800: Logic and Computation" class="md-nav__button md-logo" aria-label="CS 2800: Logic and Computation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="m9.585.52.929.68c.153.112.331.186.518.215l1.138.175a2.68 2.68 0 0 1 2.24 2.24l.174 1.139c.029.187.103.365.215.518l.68.928a2.68 2.68 0 0 1 0 3.17l-.68.928a1.2 1.2 0 0 0-.215.518l-.175 1.138a2.68 2.68 0 0 1-2.241 2.241l-1.138.175a1.2 1.2 0 0 0-.518.215l-.928.68a2.68 2.68 0 0 1-3.17 0l-.928-.68a1.2 1.2 0 0 0-.518-.215L3.83 14.41a2.68 2.68 0 0 1-2.24-2.24l-.175-1.138a1.2 1.2 0 0 0-.215-.518l-.68-.928a2.68 2.68 0 0 1 0-3.17l.68-.928c.112-.153.186-.331.215-.518l.175-1.14a2.68 2.68 0 0 1 2.24-2.24l1.139-.175c.187-.029.365-.103.518-.215l.928-.68a2.68 2.68 0 0 1 3.17 0M7.303 1.728l-.927.68a2.7 2.7 0 0 1-1.18.489l-1.137.174a1.18 1.18 0 0 0-.987.987l-.174 1.136a2.7 2.7 0 0 1-.489 1.18l-.68.928a1.18 1.18 0 0 0 0 1.394l.68.927c.256.348.424.753.489 1.18l.174 1.137c.078.509.478.909.987.987l1.136.174a2.7 2.7 0 0 1 1.18.489l.928.68c.414.305.979.305 1.394 0l.927-.68a2.7 2.7 0 0 1 1.18-.489l1.137-.174a1.18 1.18 0 0 0 .987-.987l.174-1.136a2.7 2.7 0 0 1 .489-1.18l.68-.928a1.18 1.18 0 0 0 0-1.394l-.68-.927a2.7 2.7 0 0 1-.489-1.18l-.174-1.137a1.18 1.18 0 0 0-.987-.987l-1.136-.174a2.7 2.7 0 0 1-1.18-.489l-.928-.68a1.18 1.18 0 0 0-1.394 0M11.28 6.78l-3.75 3.75a.75.75 0 0 1-1.06 0L4.72 8.78a.75.75 0 0 1 .018-1.042.75.75 0 0 1 1.042-.018L7 8.94l3.22-3.22a.75.75 0 0 1 1.042.018.75.75 0 0 1 .018 1.042"></path></svg>
+
+    </a>
+    CS 2800: Logic and Computation
+  </label>
+  
+  <ul class="md-nav__list">
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://course.ccs.neu.edu/cs2800sp26/courseinfo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Course Info
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://course.ccs.neu.edu/cs2800sp26/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Syllabus
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://course.ccs.neu.edu/cs2800sp26/schedule/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Schedule
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://course.ccs.neu.edu/cs2800sp26/cheatsheet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    OCaml Cheat Sheet
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://course.ccs.neu.edu/cs2800sp26/ocaml-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    OCaml Setup
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked="">
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Lectures
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Lectures
+          </label>
+          <ul class="md-nav__list">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Lecture 1.2: Class Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Lecture 1.3: Getting Started with OCaml; Calculator Expressions
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Lecture 1.3: Getting Started with OCaml; Calculator Expressions
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc">
+      
+        <li class="md-nav__item">
+  <a href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#overview-of-syllabus" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview of Syllabus
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#setting-up-ocaml" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setting up OCaml
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#first-steps-arithmetic-expressions" class="md-nav__link">
+    <span class="md-ellipsis">
+      First Steps: Arithmetic Expressions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#floating-point-numbers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Floating-Point Numbers
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#booleans" class="md-nav__link">
+    <span class="md-ellipsis">
+      Booleans
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#strings" class="md-nav__link">
+    <span class="md-ellipsis">
+      Strings
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#let-expressions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Let expressions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#equality" class="md-nav__link">
+    <span class="md-ellipsis">
+      Equality
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://course.ccs.neu.edu/cs2800sp26/lectures/2.1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Lecture 2.1: Functions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://course.ccs.neu.edu/cs2800sp26/lectures/2.2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Lecture 2.2: Pattern matching and Pairs
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://course.ccs.neu.edu/cs2800sp26/lectures/2.3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Lecture 2.3: More Types with ADTs; Recursion
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://course.ccs.neu.edu/cs2800sp26/lectures/3.2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Lecture 3.2: Higher-order Functions and Formal Specification
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://course.ccs.neu.edu/cs2800sp26/lectures/3.3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Lecture 3.3: Working with Specifications
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://course.ccs.neu.edu/cs2800sp26/lectures/4.1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Lecture 4.1: Property-based testing sort and flip_tree
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://course.ccs.neu.edu/cs2800sp26/lectures/4.2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Lecture 4.2: Specifying with a reference implementation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://course.ccs.neu.edu/cs2800sp26/lectures/4.3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Lecture 4.3: Polymorphism
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://course.ccs.neu.edu/cs2800sp26/lectures/5.1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Lecture 5.1: "Module" 2 with module files
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://course.ccs.neu.edu/cs2800sp26/lectures/5.2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Lecture 5.2: Manipulating Modules
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://course.ccs.neu.edu/cs2800sp26/lectures/5.3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Lecture 5.3: Specifications with Modules
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://course.ccs.neu.edu/cs2800sp26/lectures/6.1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Lecture 6.1: Abstract Types and Type Invariants
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7">
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Homework
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Homework
+          </label>
+          <ul class="md-nav__list">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://course.ccs.neu.edu/cs2800sp26/homework/hw1" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Homework 1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://course.ccs.neu.edu/cs2800sp26/homework/hw2" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Homework 2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://course.ccs.neu.edu/cs2800sp26/homework/hw3" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Homework 3
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://course.ccs.neu.edu/cs2800sp26/homework/hw4" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Homework 4
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://course.ccs.neu.edu/cs2800sp26/homework/hw5" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Homework 5
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" style="top: 48px;">
+                <div class="md-sidebar__scrollwrap" style="height: 731px;">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc">
+      
+        <li class="md-nav__item">
+  <a href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#overview-of-syllabus" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview of Syllabus
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#setting-up-ocaml" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setting up OCaml
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#first-steps-arithmetic-expressions" class="md-nav__link">
+    <span class="md-ellipsis">
+      First Steps: Arithmetic Expressions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#floating-point-numbers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Floating-Point Numbers
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#booleans" class="md-nav__link">
+    <span class="md-ellipsis">
+      Booleans
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#strings" class="md-nav__link">
+    <span class="md-ellipsis">
+      Strings
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#let-expressions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Let expressions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#equality" class="md-nav__link">
+    <span class="md-ellipsis">
+      Equality
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="lecture-13-getting-started-with-ocaml-calculator-expressions">Lecture 1.3: Getting Started with OCaml; Calculator Expressions</h1>
+<h2 id="overview-of-syllabus">Overview of Syllabus</h2>
+<p>The syllabus can be found <a href="https://course.ccs.neu.edu/cs2800sp26/">here</a>.</p>
+<h2 id="setting-up-ocaml">Setting up OCaml</h2>
+<p>Information for setting up OCaml <a href="https://course.ccs.neu.edu/cs2800sp26/ocaml-setup/">can be found here</a>.</p>
+<h2 id="first-steps-arithmetic-expressions">First Steps: Arithmetic Expressions</h2>
+<p>There are two ways we will run OCaml: via <code>utop</code>, OCaml's REPL
+(Read-Eval-Print-Loop), which allows you to type in commands interactively; and
+via <code>ocamlc</code>, which compiles OCaml to lower-level code that can be executed. 
+We will begin with <code>utop</code>. </p>
+<p>In <code>utop</code>, you can write and evaluate OCaml expressions:
+</p><div class="language-ocaml highlight"><pre><span></span><code class="md-code__content"><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-0-1"></a><span class="n">utop</span> <span class="o">#</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span><span class="o">;;</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-0-2"></a><span class="o">-</span> <span class="o">:</span> <span class="kt">int</span> <span class="o">=</span> <span class="mi">4</span>
+</span></code></pre></div><p></p>
+<p>The top line is our input <code>2+2;;</code>, while the bottom line shows the result. We must end commands to <code>utop</code> with <code>;;</code>, because newlines are ignored in OCaml:
+</p><div class="language-ocaml highlight"><pre><span></span><code class="md-code__content"><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-1-1"></a><span class="n">utop</span> <span class="o">#</span> <span class="mi">2</span> <span class="o">+</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-1-2"></a><span class="mi">2</span><span class="o">;;</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-1-3"></a><span class="o">-</span> <span class="o">:</span> <span class="kt">int</span> <span class="o">=</span> <span class="mi">4</span>
+</span></code></pre></div><p></p>
+<p>The bottom line shows <code>utop</code>'s response. This response contains two things: a <strong>type</strong> (here, <code>int</code>), and a resulting value (unsurprisingly, we get <code>4</code>). The type <code>int</code> is for integers: i.e., whole numbers. OCaml supports addition, multiplication, and integer division through the usual operators:
+</p><div class="language-ocaml highlight"><pre><span></span><code class="md-code__content"><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-2-1"></a><span class="n">utop</span> <span class="o">#</span> <span class="mi">2</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;;</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-2-2"></a><span class="o">-</span> <span class="o">:</span> <span class="kt">int</span> <span class="o">=</span> <span class="mi">7</span>
+</span></code></pre></div><p></p>
+<p>Integer division in OCaml (like many other languages) will round down to the nearest integer. You can get the remainder by using the infix operator <code>mod</code>:
+</p><div class="language-ocaml highlight"><pre><span></span><code class="md-code__content"><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-3-1"></a><span class="n">utop</span> <span class="o">#</span> <span class="mi">7</span> <span class="o">/</span> <span class="mi">3</span><span class="o">;;</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-3-2"></a><span class="o">-</span> <span class="o">:</span> <span class="kt">int</span> <span class="o">=</span> <span class="mi">2</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-3-3"></a>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-3-4"></a><span class="n">utop</span> <span class="o">#</span> <span class="mi">7</span> <span class="ow">mod</span> <span class="mi">3</span><span class="o">;;</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-3-5"></a><span class="o">-</span> <span class="o">:</span> <span class="kt">int</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-3-6"></a>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-3-7"></a><span class="n">utop</span> <span class="o">#</span> <span class="o">(</span><span class="mi">7</span> <span class="o">/</span> <span class="mi">3</span><span class="o">)</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">+</span> <span class="o">(</span><span class="mi">7</span> <span class="ow">mod</span> <span class="mi">3</span><span class="o">);;</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-3-8"></a><span class="o">-</span> <span class="o">:</span> <span class="kt">int</span> <span class="o">=</span> <span class="mi">7</span>
+</span></code></pre></div><p></p>
+<details class="note">
+<summary>Exponentiation</summary>
+<p>Exponentiation in OCaml is not built-in, but we will later be able to <em>define</em> it.</p>
+</details>
+<p>To quit <code>utop</code>, type CTRL-D, or type <code>#quit;;</code>. </p>
+<h2 id="floating-point-numbers">Floating-Point Numbers</h2>
+<p>If you want to not only use whole numbers, you can use the <code>float</code> type in OCaml, which denotes <strong>floating-point</strong> numbers.
+You can think of these as numbers with decimals. </p>
+<div class="language-ocaml highlight"><pre><span></span><code class="md-code__content"><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-4-1"></a><span class="n">utop</span> <span class="o">#</span> <span class="mi">3</span><span class="o">.</span><span class="mi">2</span><span class="o">;;</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-4-2"></a><span class="o">-</span> <span class="o">:</span> <span class="kt">float</span> <span class="o">=</span> <span class="mi">3</span><span class="o">.</span><span class="mi">2</span>
+</span></code></pre></div>
+<p>Note that the type for <code>3.2</code> is <code>float</code>, not <code>int</code>. 
+Arithmetic in OCaml is <strong>strongly typed</strong>, which means that arithmetic operators over <code>int</code> do not work over <code>float</code>. Let's try it out:
+</p><div class="language-ocaml highlight"><pre><span></span><code class="md-code__content" tabindex="0"><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-5-1"></a><span class="n">utop</span> <span class="o">#</span> <span class="mi">3</span><span class="o">.</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">5</span><span class="o">;;</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-5-2"></a><span class="nc">Error</span><span class="o">:</span> <span class="nc">The</span> <span class="n">constant</span> <span class="mi">3</span><span class="o">.</span><span class="mi">2</span> <span class="n">has</span> <span class="k">type</span> <span class="kt">float</span> <span class="n">but</span> <span class="n">an</span> <span class="n">expression</span> <span class="n">was</span> <span class="n">expected</span> <span class="k">of</span> <span class="k">type</span> <span class="kt">int</span>
+</span></code></pre></div><p></p>
+<p>OCaml gives us a <strong>type error</strong> because <code>3.2</code> is a <code>float</code>, but <code>+</code> expects an <code>int</code> on both sides. 
+To fix this, we use floating-point variations of each operator. For addition, that is <code>+.</code>. Let's try that out:
+</p><div class="language-ocaml highlight"><pre><span></span><code class="md-code__content"><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-6-1"></a><span class="n">utop</span> <span class="o">#</span> <span class="mi">3</span><span class="o">.</span><span class="mi">2</span> <span class="o">+.</span> <span class="mi">5</span><span class="o">;;</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-6-2"></a><span class="nc">Error</span><span class="o">:</span> <span class="nc">The</span> <span class="n">constant</span> <span class="mi">5</span> <span class="n">has</span> <span class="k">type</span> <span class="kt">int</span> <span class="n">but</span> <span class="n">an</span> <span class="n">expression</span> <span class="n">was</span> <span class="n">expected</span> <span class="k">of</span> <span class="k">type</span> <span class="kt">float</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-6-3"></a>    <span class="nc">Hint</span><span class="o">:</span> <span class="nc">Did</span> <span class="n">you</span> <span class="n">mean</span> <span class="mi">5</span><span class="o">.?</span>
+</span></code></pre></div>
+Oops! <code>+.</code> expects <code>float</code>s on both sides, but <code>5</code> has type <code>int</code>. The error message we get tells us that we should instead use <code>5.</code>, which is the floating-point literal for five:
+<div class="language-ocaml highlight"><pre><span></span><code class="md-code__content"><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-7-1"></a><span class="n">utop</span> <span class="o">#</span> <span class="mi">3</span><span class="o">.</span><span class="mi">2</span> <span class="o">+.</span> <span class="mi">5</span><span class="o">.;;</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-7-2"></a><span class="o">-</span> <span class="o">:</span> <span class="kt">float</span> <span class="o">=</span> <span class="mi">8</span><span class="o">.</span><span class="mi">2</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-7-3"></a>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-7-4"></a><span class="n">utop</span> <span class="o">#</span> <span class="mi">3</span><span class="o">.</span><span class="mi">2</span> <span class="o">*.</span> <span class="mi">5</span><span class="o">.;;</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-7-5"></a><span class="o">-</span> <span class="o">:</span> <span class="kt">float</span> <span class="o">=</span> <span class="mi">16</span><span class="o">.</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-7-6"></a>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-7-7"></a><span class="n">utop</span> <span class="o">#</span> <span class="mi">5</span><span class="o">.</span><span class="mi">3</span> <span class="o">/.</span> <span class="mi">5</span><span class="o">.;;</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-7-8"></a><span class="o">-</span> <span class="o">:</span> <span class="kt">float</span> <span class="o">=</span> <span class="mi">1</span><span class="o">.</span><span class="mi">06</span>
+</span></code></pre></div><p></p>
+<h2 id="booleans">Booleans</h2>
+<p>The two booleans in OCaml are written <code>true</code> and <code>false</code>. The operators between them are <code>||</code> (for OR), <code>&amp;&amp;</code> (for AND) and <code>not</code>:
+</p><div class="language-ocaml highlight"><pre><span></span><code class="md-code__content"><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-8-1"></a><span class="n">utop</span> <span class="o">#</span> <span class="bp">true</span><span class="o">;;</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-8-2"></a><span class="o">-</span> <span class="o">:</span> <span class="kt">bool</span> <span class="o">=</span> <span class="bp">true</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-8-3"></a>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-8-4"></a><span class="n">utop</span> <span class="o">#</span> <span class="bp">true</span> <span class="o">||</span> <span class="bp">false</span><span class="o">;;</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-8-5"></a><span class="o">-</span> <span class="o">:</span> <span class="kt">bool</span> <span class="o">=</span> <span class="bp">true</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-8-6"></a>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-8-7"></a><span class="n">utop</span> <span class="o">#</span> <span class="bp">true</span> <span class="o">&amp;&amp;</span> <span class="bp">false</span><span class="o">;;</span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-8-8"></a><span class="o">-</span> <span class="o">:</span> <span class="kt">bool</span> <span class="o">=</span> <span class="bp">false</span>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-8-9"></a>
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-8-10"></a><span class="n">utop</span> <span class="o">#</span> <span class="n">not</span> <span class="bp">true</span><span class="o">;;</span>
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-8-11"></a><span class="o">-</span> <span class="o">:</span> <span class="kt">bool</span> <span class="o">=</span> <span class="bp">false</span>
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-8-12"></a>
+</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-8-13"></a><span class="n">utop</span> <span class="o">#</span> <span class="n">not</span> <span class="bp">false</span> <span class="o">||</span> <span class="bp">true</span><span class="o">;;</span>
+</span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-8-14"></a><span class="o">-</span> <span class="o">:</span> <span class="kt">bool</span> <span class="o">=</span> <span class="bp">true</span>
+</span></code></pre></div>
+Note in the last line, <code>not false || true</code> gets interpreted as <code>(not false) || true</code>. Instead, we could have inserted parentheses to force the other interpretation:
+<div class="language-ocaml highlight"><pre><span></span><code class="md-code__content"><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-9-1"></a><span class="n">utop</span> <span class="o">#</span> <span class="n">not</span> <span class="o">(</span><span class="bp">false</span> <span class="o">||</span> <span class="bp">true</span><span class="o">);;</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-9-2"></a><span class="o">-</span> <span class="o">:</span> <span class="kt">bool</span> <span class="o">=</span> <span class="bp">false</span>
+</span></code></pre></div><p></p>
+<p>Booleans can be inspected using <code>if .. then .. else ..</code>:
+</p><div class="language-ocaml highlight"><pre><span></span><code class="md-code__content"><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-10-1"></a><span class="n">utop</span> <span class="o">#</span> <span class="k">if</span> <span class="bp">false</span> <span class="k">then</span> <span class="mi">2</span> <span class="k">else</span> <span class="mi">3</span><span class="o">;;</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-10-2"></a><span class="o">-</span> <span class="o">:</span> <span class="kt">int</span> <span class="o">=</span> <span class="mi">3</span>
+</span></code></pre></div><p></p>
+<h2 id="strings">Strings</h2>
+<p>Strings can be created by using double quotes:
+</p><div class="language-ocaml highlight"><pre><span></span><code class="md-code__content"><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-11-1"></a><span class="n">utop</span> <span class="o">#</span> <span class="s2">"hi"</span><span class="o">;;</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-11-2"></a><span class="o">-</span> <span class="o">:</span> <span class="kt">string</span> <span class="o">=</span> <span class="s2">"hi"</span>
+</span></code></pre></div><p></p>
+<p>Strings can be concatenated together (put side by side) by using the <code>^</code> operator (don't confuse it with exponentiation!)</p>
+<div class="language-ocaml highlight"><pre><span></span><code class="md-code__content"><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-12-1"></a><span class="n">utop</span> <span class="o">#</span> <span class="s2">"hi "</span> <span class="o">^</span> <span class="s2">"there"</span><span class="o">;;</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-12-2"></a><span class="o">-</span> <span class="o">:</span> <span class="kt">string</span> <span class="o">=</span> <span class="s2">"hi there"</span>
+</span></code></pre></div>
+<h2 id="let-expressions">Let expressions</h2>
+<p>Expressions can locally define variables using <code>let x = .. in ..</code>: 
+</p><div class="language-ocaml highlight"><pre><span></span><code class="md-code__content"><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-13-1"></a><span class="n">utop</span> <span class="o">#</span> <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">8</span> <span class="k">in</span> <span class="n">x</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">;;</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-13-2"></a><span class="o">-</span> <span class="o">:</span> <span class="kt">int</span> <span class="o">=</span> <span class="mi">4</span>
+</span></code></pre></div><p></p>
+<p>These can be arbitrarily nested and sequenced:
+</p><div class="language-ocaml highlight"><pre><span></span><code class="md-code__content"><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-14-1"></a><span class="n">utop</span> <span class="o">#</span> <span class="k">let</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">in</span> <span class="k">let</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">2</span> <span class="k">in</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="o">;;</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-14-2"></a><span class="o">-</span> <span class="o">:</span> <span class="kt">int</span> <span class="o">=</span> <span class="mi">3</span>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-14-3"></a>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-14-4"></a><span class="n">utop</span> <span class="o">#</span> <span class="k">let</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span> <span class="k">in</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">a</span> <span class="o">;;</span>
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-14-5"></a><span class="o">-</span> <span class="o">:</span> <span class="kt">int</span> <span class="o">=</span> <span class="mi">12</span>
+</span></code></pre></div><p></p>
+<p>Which can be written in a cleaner style by using newlines:
+</p><div class="language-ocaml highlight"><pre><span></span><code class="md-code__content"><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-15-1"></a><span class="n">utop</span> <span class="o">#</span> <span class="k">let</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">in</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-15-2"></a>       <span class="k">let</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">2</span> <span class="k">in</span>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-15-3"></a>       <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="o">;;</span>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-15-4"></a><span class="o">-</span> <span class="o">:</span> <span class="kt">int</span> <span class="o">=</span> <span class="mi">3</span>
+</span></code></pre></div><p></p>
+<p>Let expressions can also be nested <strong>inside</strong> on the left-hand side of another let expression:
+</p><div class="language-ocaml highlight"><pre><span></span><code class="md-code__content"><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-16-1"></a><span class="n">utop</span> <span class="o">#</span> <span class="k">let</span> <span class="n">x</span> <span class="o">=</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-16-2"></a>   <span class="k">let</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">in</span> <span class="n">a</span> <span class="o">+</span> <span class="mi">1</span>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-16-3"></a>   <span class="k">in</span>
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-16-4"></a>   <span class="n">x</span> <span class="o">*</span> <span class="mi">2</span><span class="o">;;</span>
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-16-5"></a><span class="o">-</span> <span class="o">:</span> <span class="kt">int</span> <span class="o">=</span> <span class="mi">4</span>
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-16-6"></a>
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-16-7"></a><span class="n">utop</span> <span class="o">#</span> <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> 
+</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-16-8"></a>    <span class="o">(</span><span class="k">let</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">in</span> <span class="n">a</span><span class="o">)</span> <span class="o">*</span> <span class="o">(</span><span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">2</span> <span class="k">in</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="k">in</span> 
+</span><span id="__span-16-9"><a id="__codelineno-16-9" name="__codelineno-16-9" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-16-9"></a>    <span class="mi">100</span> <span class="o">/</span> <span class="n">x</span>
+</span><span id="__span-16-10"><a id="__codelineno-16-10" name="__codelineno-16-10" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-16-10"></a>    <span class="o">;;</span>
+</span><span id="__span-16-11"><a id="__codelineno-16-11" name="__codelineno-16-11" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-16-11"></a><span class="o">-</span> <span class="o">:</span> <span class="kt">int</span> <span class="o">=</span> <span class="mi">33</span>
+</span></code></pre></div><p></p>
+<p>In <code>utop</code>, you can define variables without giving a right-hand side <code>in ..</code>:
+</p><div class="language-ocaml highlight"><pre><span></span><code class="md-code__content"><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-17-1"></a><span class="n">utop</span> <span class="o">#</span> <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">3</span><span class="o">;;</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-17-2"></a><span class="k">val</span> <span class="n">x</span> <span class="o">:</span> <span class="kt">int</span> <span class="o">=</span> <span class="mi">3</span>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-17-3"></a>
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-17-4"></a><span class="n">utop</span> <span class="o">#</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;;</span>
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-17-5"></a><span class="o">-</span> <span class="o">:</span> <span class="kt">int</span> <span class="o">=</span> <span class="mi">4</span>
+</span></code></pre></div><p></p>
+<p>The binding of <code>x</code> will be available for the rest of the <code>utop</code> session. You can update the binding by re-defining it:
+</p><div class="language-ocaml highlight"><pre><span></span><code class="md-code__content"><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-18-1"></a><span class="n">utop</span> <span class="o">#</span> <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">3</span><span class="o">;;</span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-18-2"></a><span class="k">val</span> <span class="n">x</span> <span class="o">:</span> <span class="kt">int</span> <span class="o">=</span> <span class="mi">3</span>
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-18-3"></a>
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-18-4"></a><span class="n">utop</span> <span class="o">#</span> <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">2</span><span class="o">;;</span>
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-18-5"></a><span class="k">val</span> <span class="n">x</span> <span class="o">:</span> <span class="kt">int</span> <span class="o">=</span> <span class="mi">2</span>
+</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-18-6"></a>
+</span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-18-7"></a><span class="n">utop</span> <span class="o">#</span> <span class="n">x</span><span class="o">;;</span>
+</span><span id="__span-18-8"><a id="__codelineno-18-8" name="__codelineno-18-8" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-18-8"></a><span class="o">-</span> <span class="o">:</span> <span class="kt">int</span> <span class="o">=</span> <span class="mi">2</span>
+</span></code></pre></div><p></p>
+<p>You can even make reference to the old version of <code>x</code> while defining the new one:
+</p><div class="language-ocaml highlight"><pre><span></span><code class="md-code__content"><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-19-1"></a><span class="n">utop</span> <span class="o">#</span> <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">3</span><span class="o">;;</span>
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-19-2"></a><span class="k">val</span> <span class="n">x</span> <span class="o">:</span> <span class="kt">int</span> <span class="o">=</span> <span class="mi">3</span>
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-19-3"></a>
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-19-4"></a><span class="n">utop</span> <span class="o">#</span> <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;;</span>
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-19-5"></a><span class="k">val</span> <span class="n">x</span> <span class="o">:</span> <span class="kt">int</span> <span class="o">=</span> <span class="mi">4</span>
+</span></code></pre></div>
+However, you should <strong>not</strong> think of this as mutating or modifying <code>x</code>! Instead, this is <strong>re-defining</strong> a new value of <code>x</code> based on the old one. <p></p>
+<h2 id="equality">Equality</h2>
+<p>Integers can be tested for equality using <code>=</code>:
+</p><div class="language-ocaml highlight"><pre><span></span><code class="md-code__content"><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-20-1"></a><span class="n">utop</span> <span class="o">#</span> <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span> <span class="k">in</span> 
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-20-2"></a>       <span class="k">let</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="mi">2</span> <span class="k">in</span> 
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-20-3"></a>       <span class="k">if</span> <span class="n">x</span> <span class="o">=</span> <span class="n">y</span> <span class="k">then</span> <span class="mi">3</span> <span class="k">else</span> <span class="mi">4</span><span class="o">;;</span>
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-20-4"></a><span class="o">-</span> <span class="o">:</span> <span class="kt">int</span> <span class="o">=</span> <span class="mi">3</span>
+</span></code></pre></div><p></p>
+<p>We can use <code>=</code> for Booleans as well:
+</p><div class="language-ocaml highlight"><pre><span></span><code class="md-code__content"><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-21-1"></a><span class="n">utop</span> <span class="o">#</span> <span class="bp">false</span> <span class="o">=</span> <span class="bp">true</span><span class="o">;;</span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="https://course.ccs.neu.edu/cs2800sp26/lectures/1.3/#__codelineno-21-2"></a><span class="o">-</span> <span class="o">:</span> <span class="kt">bool</span> <span class="o">=</span> <span class="bp">false</span>
+</span></code></pre></div><p></p>
+<p>The <code>=</code> operator will be useful for other types too; we will revisit this later.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="./Lecture 1.3_ Getting Started with OCaml; Calculator Expressions - CS 2800_ Logic and Computation_files/bundle.56ea9cef.min.js"></script>
+      
+        <script src="./Lecture 1.3_ Getting Started with OCaml; Calculator Expressions - CS 2800_ Logic and Computation_files/mathjax.js"></script>
+      
+        <script src="./Lecture 1.3_ Getting Started with OCaml; Calculator Expressions - CS 2800_ Logic and Computation_files/tex-mml-chtml.js"></script>
+      
+    
+  
+</body><grammarly-desktop-integration data-grammarly-shadow-root="true"><template shadowrootmode="open"><style>
+      div.grammarly-desktop-integration {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select:none;
+        user-select:none;
+      }
+
+      div.grammarly-desktop-integration:before {
+        content: attr(data-content);
+      }
+    </style><div aria-label="grammarly-integration" role="group" tabindex="-1" class="grammarly-desktop-integration" data-content="{&quot;mode&quot;:&quot;limited&quot;,&quot;isActive&quot;:false,&quot;isUserDisabled&quot;:false}"></div></template></grammarly-desktop-integration></html>

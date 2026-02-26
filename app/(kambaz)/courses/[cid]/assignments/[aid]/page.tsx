@@ -1,15 +1,21 @@
 "use client";
 
+import { useParams } from "next/navigation";
+import Link from "next/link";
+import * as db from "../../../../database";
 import { Form, Row, Col, Button } from "react-bootstrap";
 
 export default function AssignmentEditor() {
+  const { cid, aid } = useParams();
+  const assignment = db.assignments.find((a: any) => a._id === aid);
+
   return (
     <div id="wd-assignments-editor">
       <div className="mx-auto" style={{ maxWidth: 720 }}>
         <Form>
           <Form.Group className="mb-3">
             <Form.Label htmlFor="wd-name">Assignment Name</Form.Label>
-            <Form.Control id="wd-name" defaultValue="A1 - ENV + HTML" />
+            <Form.Control id="wd-name" defaultValue={assignment?.title} />
           </Form.Group>
 
           <Form.Group className="mb-4">
@@ -17,7 +23,7 @@ export default function AssignmentEditor() {
               as="textarea"
               rows={6}
               id="wd-description"
-              defaultValue="The assignment is available online. Submit a link to the landing page of your Web application running on Netlify."
+              defaultValue={assignment?.description}
             />
           </Form.Group>
 
@@ -28,7 +34,11 @@ export default function AssignmentEditor() {
               </Form.Label>
             </Col>
             <Col sm={9}>
-              <Form.Control id="wd-points" type="number" defaultValue={100} />
+              <Form.Control
+                id="wd-points"
+                type="number"
+                defaultValue="100"
+              />
             </Col>
           </Row>
 
@@ -125,7 +135,7 @@ export default function AssignmentEditor() {
               <Form.Control
                 id="wd-due-date"
                 type="date"
-                defaultValue="2024-05-13"
+                defaultValue="2024-05-20"
               />
             </Col>
           </Row>
@@ -140,7 +150,7 @@ export default function AssignmentEditor() {
               <Form.Control
                 id="wd-available-from"
                 type="date"
-                defaultValue="2024-05-06"
+                defaultValue="2024-05-20"
               />
             </Col>
 
@@ -161,10 +171,14 @@ export default function AssignmentEditor() {
           </Row>
 
           <div className="text-end">
-            <Button variant="secondary" className="me-2">
-              Cancel
-            </Button>
-            <Button variant="danger">Save</Button>
+            <Link href={`/courses/${cid}/assignments`}>
+              <Button variant="secondary" className="me-2">
+                Cancel
+              </Button>
+            </Link>
+            <Link href={`/courses/${cid}/assignments`}>
+              <Button variant="danger">Save</Button>
+            </Link>
           </div>
         </Form>
       </div>

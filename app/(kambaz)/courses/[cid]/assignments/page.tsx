@@ -1,14 +1,18 @@
+"use client";
+import { useParams } from "next/navigation";
+import * as db from "../../../database";
 import Link from "next/link";
 import AssignmentsControls from "./AssignmentsControls";
 import { ListGroup, ListGroupItem, Badge } from "react-bootstrap";
-import { BsGripVertical } from "react-icons/bs";
-import ModuleControlButtons from "../modules/ModuleControlButtons";
-import LessonControlButtons from "./LessonControlButtons";
-import AssignmentsControlButtons from "./AssignmentsControlButtons";
-import { BsCaretDownFill } from "react-icons/bs";
+import { BsGripVertical, BsCaretDownFill } from "react-icons/bs";
 import { FaPenToSquare } from "react-icons/fa6";
+import AssignmentsControlButtons from "./AssignmentsControlButtons";
+import LessonControlButtons from "./LessonControlButtons";
 
 export default function Assignments() {
+  const { cid } = useParams();
+  const assignments = db.assignments;
+
   return (
     <div id="wd-assignments">
       <AssignmentsControls />
@@ -29,69 +33,31 @@ export default function Assignments() {
             <AssignmentsControlButtons />
           </div>
           <ListGroup className="wd-lessons rounded-0">
-            <ListGroupItem className="wd-lesson p-3 ps-1">
-              <div className="d-flex align-items-start">
-                <BsGripVertical className="me-2 fs-3" />
-                <div className="flex-fill">
-                  <Link
-                    href={`/courses/1234/assignments/123`}
-                    className="text-muted text-decoration-none"
-                    title="Edit"
-                  >
-                    <FaPenToSquare className="fs-5" />
-                  </Link>
-                  A1 - ENV + HTML
-                  <div className="subtitles">
-                    <span className="text-danger">Multiple Modules</span>
-                    {" | "}Not available until May 6 at 12:00am{" | "}
-                    <b>Due</b> May 13 at 11:59pm{" | "}100 pts
+            {assignments
+              .filter((assignment: any) => assignment.course === cid)
+              .map((assignment: any) => (
+                <ListGroupItem key={assignment._id} className="wd-lesson p-3 ps-1">
+                  <div className="d-flex align-items-start">
+                    <BsGripVertical className="me-2 fs-3" />
+                    <div className="flex-fill">
+                      <Link
+                        href={`/courses/${cid}/assignments/${assignment._id}`}
+                        className="text-muted text-decoration-none"
+                        title="Edit"
+                      >
+                        <FaPenToSquare className="fs-5" />
+                      </Link>
+                      {assignment.title}
+                      <div className="subtitles">
+                        <span className="text-danger">Multiple Modules</span>
+                        {" | "}Not available until {assignment.availableFrom} at 12:00am{" | "}
+                        <b>Due</b> {assignment.dueDate} at 11:59pm{" | "}{assignment.points} pts
+                      </div>
+                    </div>
+                    <LessonControlButtons />
                   </div>
-                </div>
-                <LessonControlButtons />
-              </div>
-            </ListGroupItem>
-            <ListGroupItem className="wd-lesson p-3 ps-1">
-              <div className="d-flex align-items-start">
-                <BsGripVertical className="me-2 fs-3" />
-                <div className="flex-fill">
-                  <Link
-                    href={`/courses/1234/assignments/123`}
-                    className="text-muted text-decoration-none"
-                    title="Edit"
-                  >
-                    <FaPenToSquare className="fs-5" />
-                  </Link>
-                  A2 - ENV + MATH
-                  <div className="subtitles">
-                    <span className="text-danger">Multiple Modules</span>
-                    {" | "}Not available until May 12 at 12:00am{" | "}
-                    <b>Due</b> May 19 at 11:59pm{" | "}100 pts
-                  </div>
-                </div>
-                <LessonControlButtons />
-              </div>
-            </ListGroupItem>
-            <ListGroupItem className="wd-lesson p-3 ps-1">
-              <div className="d-flex align-items-start">
-                <BsGripVertical className="me-2 fs-3" />
-                <div className="flex-fill">
-                  <Link
-                    href={`/courses/1234/assignments/123`}
-                    className="text-muted text-decoration-none"
-                    title="Edit"
-                  >
-                    <FaPenToSquare className="fs-5" />
-                  </Link>
-                  A3 - Science + HTML
-                  <div className="subtitles">
-                    <span className="text-danger">Multiple Modules</span>
-                    {" | "}Not available until May 15 at 12:00am{" | "}
-                    <b>Due</b> May 30 at 11:59pm{" | "}100 pts
-                  </div>
-                </div>
-                <LessonControlButtons />
-              </div>
-            </ListGroupItem>
+                </ListGroupItem>
+              ))}
           </ListGroup>
         </ListGroupItem>
       </ListGroup>
