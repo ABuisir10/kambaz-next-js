@@ -6,7 +6,7 @@ import * as db from "../../../../database";
 import { Form, Row, Col, Button } from "react-bootstrap";
 
 export default function AssignmentEditor() {
-  const { cid, aid } = useParams();
+const { cid, aid } = useParams() as { cid: string; aid: string };
   const assignment = db.assignments.find((a: any) => a._id === aid);
 
   return (
@@ -23,7 +23,7 @@ export default function AssignmentEditor() {
               as="textarea"
               rows={6}
               id="wd-description"
-              defaultValue={assignment?.description}
+              defaultValue="This is the assignment"
             />
           </Form.Group>
 
