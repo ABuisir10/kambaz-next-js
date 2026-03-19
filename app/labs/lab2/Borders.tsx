@@ -13,7 +13,7 @@ export default function Borders() {
      wd-border-blue wd-border-dashed"
       >
         Dashed thin blue border
-      </p>
+      </p> 
     </div>
   );
 }

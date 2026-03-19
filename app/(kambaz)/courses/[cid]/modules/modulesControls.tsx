@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Button,
   Dropdown,
@@ -7,7 +8,17 @@ import {
 } from "react-bootstrap";
 import { FaPlus } from "react-icons/fa6";
 import GreenCheckmark from "./GreenCheckmark";
-export default function ModulesControls() {
+import ModuleEditor from "./ModuleEditor";
+export default function ModulesControls({
+  moduleName,
+  setModuleName,
+  addModule,
+}: {
+  moduleName: string;
+  setModuleName: (name: string) => void;
+  addModule: () => void;
+}) {
+  const [show, setShow] = useState(false);
   return (
     <div id="wd-modules-controls" className="text-nowrap">
       <Button
@@ -15,10 +26,19 @@ export default function ModulesControls() {
         size="lg"
         className="me-1 float-end"
         id="wd-add-module-btn"
+        onClick={() => setShow(true)}
       >
         <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
         Module
       </Button>
+      <ModuleEditor
+        show={show}
+        handleClose={() => setShow(false)}
+        dialogTitle="Add Module"
+        moduleName={moduleName}
+        setModuleName={setModuleName}
+        addModule={addModule}
+      />
       <Dropdown className="float-end me-2">
         <DropdownToggle variant="secondary" size="lg" id="wd-publish-all-btn">
           <GreenCheckmark /> Publish All
