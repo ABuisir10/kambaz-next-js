@@ -14,7 +14,7 @@ export default function AssignmentEditor() {
   const { assignments } = useSelector((state: RootState) => state.assignmentsReducer);
   const existingAssignment = assignments.find((a: any) => a._id === aid);
 
-  const [assignment, setAssignment] = useState(existingAssignment || {
+  const [assignment, setAssignment] = useState<any>(existingAssignment || {
     title: "New Assignment",
     description: "New Assignment Description",
     points: 100,
