@@ -2,6 +2,7 @@
 import { useParams, useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { addAssignment, updateAssignment } from "../reducer";
+import * as client from "../../../client";
 import { RootState } from "../../../../store";
 import { useState } from "react";
 import Link from "next/link";
@@ -24,11 +25,13 @@ export default function AssignmentEditor() {
     course: cid,
   });
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (existingAssignment) {
+      await client.updateAssignment(assignment);
       dispatch(updateAssignment(assignment));
     } else {
-      dispatch(addAssignment(assignment));
+      const newAssignment = await client.createAssignment(cid, assignment);
+      dispatch(addAssignment(newAssignment));
     }
     router.push(`/courses/${cid}/assignments`);
   };
