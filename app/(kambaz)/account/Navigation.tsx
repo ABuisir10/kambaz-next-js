@@ -10,7 +10,7 @@ export default function AccountNavigation() {
   const pathname = usePathname();
   
   return (
-    <Nav id="wd-account-navigation" variant="pills">
+    <Nav id="wd-account-navigation" variant="pills" className="flex-column">
       <NavLink as={Link} href="/account/signin" active={pathname.endsWith('/signin')}>
         Signin
       </NavLink>
