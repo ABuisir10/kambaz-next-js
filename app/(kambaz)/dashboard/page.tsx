@@ -47,7 +47,7 @@ export default function Dashboard() {
     courses.some((c: any) => c._id === courseId);
 
   const onEnroll = async (courseId: string) => {
-    await client.enrollInCourse("current", courseId);
+    await client.enrollIntoCourse("current", courseId);
     await fetchCourses();
   };
 
